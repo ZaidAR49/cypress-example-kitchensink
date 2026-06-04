@@ -57,11 +57,11 @@ jobs:
 
       # Starts local server, then runs Cypress tests and records results on Cypress Cloud
       - name: Cypress tests
-        run: npm run test:ci:record
+        run: npm run test
         env:
           # place your secret record key at
           # https://github.com/cypress-io/cypress-example-kitchensink/settings/secrets
-          CYPRESS_RECORD_KEY: ${{ secrets.dashboardRecordKey }}
+          # CYPRESS_RECORD_KEY: ${{ secrets.dashboardRecordKey }}
           TERM: xterm
 
       # Save screenshots as test artifacts
