@@ -60,7 +60,7 @@ jobs:
         run: npm run test:ci | tee test-results.txt
         env:
           TERM: xterm
-
+          NO_COLOR: 1
       # Save screenshots as test artifacts
       - uses: actions/upload-artifact@v7
         if: failure()
