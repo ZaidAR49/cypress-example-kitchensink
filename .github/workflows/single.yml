@@ -55,22 +55,27 @@ jobs:
           npx cypress version --component electron
           npx cypress version --component node
 
-      # Starts local server, then runs Cypress tests and records results on Cypress Cloud
+      # Starts local server, then runs Cypress tests
       - name: Cypress tests
         run: npm run test
         env:
-          # place your secret record key at
-          # https://github.com/cypress-io/cypress-example-kitchensink/settings/secrets
-          # CYPRESS_RECORD_KEY: ${{ secrets.dashboardRecordKey }}
           TERM: xterm
 
       # Save screenshots as test artifacts
       # https://github.com/actions/upload-artifact
       - uses: actions/upload-artifact@v7
-        # there might be no screenshots created when:
-        # - there are no test failures
-        # so only upload screenshots if previous step has failed
         if: failure()
         with:
           name: screenshots
           path: cypress/screenshots
+
+      # Notify n8n
+      - name: Send Result to n8n
+        if: always()
+        run: |
+          curl -X POST "https://zaidrad492.app.n8n.cloud/webhook-test/6abbfb4c-547d-4b84-8887-8364708f3bf3" \
+          -H "Content-Type: application/json" \
+          -d "{
+            \"status\": \"${{ job.status }}\",
+            \"run_url\": \"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\"
+          }"
