@@ -55,24 +55,9 @@ jobs:
           npx cypress version --component electron
           npx cypress version --component node
 
-      # Starts local server, then runs Cypress tests
+      # Starts local server, runs Cypress tests, saves output, and kills server when done
       - name: Cypress tests
-        run: npm run test
-        env:
-          TERM: xterm
-
-      # Save screenshots as test artifacts
-      # https://github.com/actions/upload-artifact
-      - uses: actions/upload-artifact@v7
-        if: failure()
-        with:
-          name: screenshots
-          path: cypress/screenshots
-
-      # Notify n8n
-      # Starts local server, then runs Cypress tests and saves output to a file
-      - name: Cypress tests
-        run: npm run test | tee test-results.txt
+        run: npm run test:ci | tee test-results.txt
         env:
           TERM: xterm
 
