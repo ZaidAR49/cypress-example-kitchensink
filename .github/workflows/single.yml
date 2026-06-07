@@ -78,5 +78,6 @@ jobs:
             --rawfile results test-results.txt \
             '{status: $status, run_url: $run_url, text_result: $results}' > n8n_payload.json
 
-          curl -X POST https://zaidrad4910.app.n8n.cloud/webhook-test/6fa5a025-8b77-4922-ad63-ac6a91b29c65
+          curl -X POST "https://zaidrad4910.app.n8n.cloud/webhook-test/acd68b24-1b73-4497-8427-0b596d18a0ca" \
+          -H "Content-Type: application/json" \
           -d @n8n_payload.json
