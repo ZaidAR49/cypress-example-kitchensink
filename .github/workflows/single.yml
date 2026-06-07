@@ -2,7 +2,11 @@
 # https://docs.github.com/en/actions/using-workflows
 name: Cypress single tests
 
-on: [push, workflow_dispatch]
+on:
+  push:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 3 * * *'  # 6 AM Amman time (UTC+3)
 
 jobs:
   test1:
@@ -78,6 +82,6 @@ jobs:
             --rawfile results test-results.txt \
             '{status: $status, run_url: $run_url, text_result: $results}' > n8n_payload.json
 
-          curl -X POST "https://zaidrad4910.app.n8n.cloud/webhook-test/acd68b24-1b73-4497-8427-0b596d18a0ca" \
+          curl -X POST "https://zaidrad4910.app.n8n.cloud/webhook-test/beeaec25-cd67-474a-a8e9-d432e7e53139" \
           -H "Content-Type: application/json" \
           -d @n8n_payload.json
